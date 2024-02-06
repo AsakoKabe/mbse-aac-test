@@ -1,0 +1,9 @@
+@startuml  Object Diagram
+title  Object Diagram
+object CurrencyRate
+object CurrencyRateServer
+object CurrencyRateClient
+
+CurrencyRate *-- CurrencyRateServer
+CurrencyRate *-- CurrencyRateClient
+@enduml

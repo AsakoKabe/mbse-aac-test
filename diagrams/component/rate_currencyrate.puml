@@ -1,0 +1,13 @@
+@startuml CurrencyRate Component Diagram
+title CurrencyRate Component Diagram
+
+component "CurrencyRate" {
+  interface CurrencyRateRequest
+  component "CurrencyRateServer"
+  CurrencyRateRequest --> CurrencyRateServer : сurrencyRateRequest
+
+  component "CurrencyRateClient"
+  CurrencyRateClient --> CurrencyRateRequest : сurrencyRateRequest
+
+}
+@enduml

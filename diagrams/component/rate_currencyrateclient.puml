@@ -1,0 +1,7 @@
+@startuml CurrencyRateClient Component Diagram
+title CurrencyRateClient Component Diagram
+
+interface CurrencyRateRequest
+component "CurrencyRateClient"
+CurrencyRateClient --> CurrencyRateRequest : сurrencyRateRequest
+@enduml

@@ -1,0 +1,8 @@
+@startuml Отображение текущего курса валюты Sequence Diagram
+title Отображение текущего курса валюты Sequence Diagram
+participant CurrencyRateClient as client
+participant CurrencyRateServer as server
+
+client -> server : getCurrencyRate
+server -> client : returnCurrencyRate
+@enduml

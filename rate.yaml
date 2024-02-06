@@ -1,0 +1,80 @@
+model:
+  name: CurrencyRate
+  description: Сервис для мониторинга курса валюты
+  components:
+    - name: server
+      type: CurrencyRateServer
+    - name: client
+      type: CurrencyRateClient
+
+---
+model:
+  name: CurrencyRateServer
+  description: Сервис для получения текущего курса
+  behavior:
+    - name: returnCurrencyRate
+      type: REQUEST_RESPONSE
+      description: Получить текущий курс
+      input:
+        - name: сurrencyRateRequest
+          type: CurrencyRateRequest
+      acceptance:
+        - scenario: Получить курс валюты USD - RUB
+          given:
+            - Текущей курс валюты
+          when:
+            - Пользователь запрашивает новый курс
+          then:
+            - Пользователю отправляется текущий курс валюты на вызов ручки
+
+
+---
+model:
+  name: CurrencyRateClient
+  description: Сервис для выводна экран текущего курса
+  behavior:
+    - name: getCurrencyRate
+      type: REQUEST_RESPONSE
+      description: Вывод на экран текущего курса
+      output:
+        - name: сurrencyRateRequest
+          type: CurrencyRateRequest
+      acceptance:
+        - scenario: Отображение курса валюты USD - RUB
+          given:
+            - Отображается курс валюты
+          when:
+            - Прошла минута с прошлого обновления курса
+          then:
+            - Делается запрос на сервер и отображения новый курс валюты
+
+
+---
+schema:
+  name: CurrencyRateRequest
+  description: Запрос на получение текущего курса
+  fields:
+    - name: from
+      type: string
+    - name: to
+      type: string
+
+
+---
+usecase:
+  name: Отображение текущего курса валюты
+  description: Пользователю на экран выводится текущий курс валюты
+  participants:
+    - name: client
+      type: CurrencyRateClient
+    - name: server
+      type: CurrencyRateServer
+  steps:
+    - step: Клиент запрашивает актуальный курс
+      source: client
+      target: server
+      action: getCurrencyRate
+    - step: Сервер возвращает текущий курс
+      source: server
+      target: client
+      action: returnCurrencyRate
